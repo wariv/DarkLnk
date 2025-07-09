@@ -6,7 +6,7 @@ The purpose of DarkLnk is to exploit the .lnk format and achieve 2 goals:
 
 &nbsp;
 
-The general idea is that a malicious DarkLnk .lnk file will be delivered to a target and the file icon, properties, and context will all appear to be a valid .lnk to a choosen filetype. However, the .lnk file will still point towards PowerShell and execute PowerShell commands. This all works great.
+The general idea is that a malicious DarkLnk .lnk file will be delivered to a target and the file icon, properties, and context will all appear to be a valid .lnk to a choosen filetype. However, the .lnk file will still point towards PowerShell and execute PowerShell commands.
 
 **The Good**
 - The icon reflects the extension choosen by the attacker.
