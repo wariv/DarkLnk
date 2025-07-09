@@ -22,13 +22,14 @@ The general idea is that a malicious DarkLnk .lnk file will be delivered to a ta
 - After running the .lnk Windows Link Healing will "fix" the link and will appear like a normal PowerShell .lnk file.
 
 **The Future**
-- Add more attacker flexibility. I've designed this tool in a way I see fit. However, that might not meet the needs of other organizations. I'd like to add full control over all the important data sections.
-- Add more obfuscation capabilities. There is plenty of "dead space" within the .lnk file format. There are many sections that can be filled with arbitrary data and it will not affect the execution of the .lnk.
+- ~~Add more attacker flexibility~~ (Completed)
+- ~~Add more obfuscation capabilities~~ (Completed)
+- Find out why only PowerShell works and not other binaries like cmd.exe
 
 &nbsp;
 
 # Usage
-<img src="https://github.com/user-attachments/assets/ad431f7f-24e0-4daf-8c68-e2c9c51d6875" width=500>
+<img src="https://github.com/user-attachments/assets/0f37b03c-4328-48b7-92b4-a488ce1cd59a" width=500>
 
 &nbsp;
 
@@ -38,7 +39,8 @@ With this tool we can generate a .lnk file containing PowerShell (Pretty standar
 
 
 ### Step 1: Create the .lnk file
-<img src="https://github.com/user-attachments/assets/066c81f5-adf3-4782-9b8a-02cb43c4fd8e" width=500>
+<img src="https://github.com/user-attachments/assets/42a7dcc8-4b63-4668-8d7f-0fb47d5631d6" width=500>
+
 
 &nbsp;
 
@@ -72,7 +74,7 @@ The Lnk file format is like the wild west. Certain sections may be ommitted. The
 - ShellLinkItemIdList
 - ShellLinkInfo
 
-A decent amount of the data has been stripped out as null bytes. Most of everything in these links that is not 0x00 is required for the link to work.
+A decent amount of the data has been stripped out as null bytes. Most of everything in these links that is not 0x00 is required for the link to work. Many of these void areas can be modified with the tools obfuscation techniques.
 
 <img src="https://github.com/user-attachments/assets/88e0ca15-47f0-478e-83b7-e5f16f772b0b" width=500>
 
