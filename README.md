@@ -29,7 +29,7 @@ The general idea is that a malicious DarkLnk .lnk file will be delivered to a ta
 &nbsp;
 
 # Usage
-<img src="https://github.com/user-attachments/assets/0f37b03c-4328-48b7-92b4-a488ce1cd59a" width=500>
+<img src="https://github.com/user-attachments/assets/0f37b03c-4328-48b7-92b4-a488ce1cd59a" width=800>
 
 &nbsp;
 
