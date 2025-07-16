@@ -25,8 +25,18 @@ The general idea is that a malicious DarkLnk .lnk file will be delivered to a ta
 - ~~Add more attacker flexibility~~ (Completed)
 - ~~Add more obfuscation capabilities~~ (Completed)
 - Find out why only PowerShell works and not other binaries like cmd.exe
+- Add additional obfuscation techniques.
 
 &nbsp;
+
+# Change Log
+- v1.0
+- v1.1
+  - Fixed an issue where the drive serial field prevented the LNK from executing on computers other than the one it was created.
+  - Fixed an issue with relative path fields which would sometimes prevent the lnk from working in certain directories.
+
+&nbsp;
+
 
 # Usage
 <img src="https://github.com/user-attachments/assets/0f37b03c-4328-48b7-92b4-a488ce1cd59a" width=800>
